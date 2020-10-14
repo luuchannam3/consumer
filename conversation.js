@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { Schema, Model } = mongoose;
+const { Schema } = mongoose;
 
 const ConversationSchema = new Schema({
     _id: { type: String },

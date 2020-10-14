@@ -1,19 +1,15 @@
-const moment = require('moment');
 const kafka = require('kafka-node');
 const privateChat = require('./private_chat');
 const groupChat = require('./group_chat');
 const mongoose = require('mongoose');
 const type = require('./type');
-const avro = require('avsc');
 const converstion = require('./conversation');
 const config= require('./config');
 
 // RetryConnection :
 
-//origin  ssh://git@lab.zinza.com.vn:2468/Medical/chat/consumer.git
 (async () => {
   function RetryConnection() {
-    console.log("1")
     mongoose.connect(config.MONGO_URI, {
       useCreateIndex: true,
       useNewUrlParser: true,
@@ -22,12 +18,11 @@ const config= require('./config');
   }
 
   mongoose.connection.on('error', err => {
-    console.log("2")
+    if(err) throw(err)
     setTimeout(RetryConnection, 5000);
   });
 
   mongoose.connection.on('connected', async () => {
-    console.log("3")
     console.log("database connected")
   });
 
@@ -108,7 +103,6 @@ const config= require('./config');
     })
     
   });
-
   kafkaClient.on('error', (error) => console.error('Kafka client error:', error));
   kafkaConsumer.on('error', (error) => console.error('Kafka consumer error:', error));
 })().catch(e => {

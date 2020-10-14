@@ -1,6 +1,6 @@
 // import { Schema, model } from 'mongoose';
 const mongoose =require('mongoose')
-const { Schema, Model} = mongoose;
+const { Schema} = mongoose;
 
 const GroupChatSchema = new Schema({
     id_Conversation: { type: String },
