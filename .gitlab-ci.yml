@@ -14,7 +14,6 @@ docker-build-master:
   script:
     - docker build -t harbor.zinza.com.vn/medical/chat/consumer .
     - docker push harbor.zinza.com.vn/medical/chat/consumer
-  when: manual
 test_server:
   image: harbor.zinza.com.vn/medical/chat/consumer
   stage: test
@@ -26,7 +25,6 @@ test_server:
     - npm install
   script:
     - npx eslint ./
-  when: manual
 deploy_app:
   stage: deploy
   image: alpine:latest
@@ -43,4 +41,3 @@ deploy_app:
   script:
     - ssh $CI_SSH_USER@$CI_SSH_SERVER docker-compose -f /home/channam/Desktop/nam/api-socket-server/consumer/docker-compose.yml down
     - ssh $CI_SSH_USER@$CI_SSH_SERVER docker-compose -f /home/channam/Desktop/nam/api-socket-server/consumer/docker-compose.yml up -d
-  when: manual
