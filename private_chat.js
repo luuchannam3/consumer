@@ -1,11 +1,11 @@
-const mongoose =require('mongoose')
-const { Schema} = mongoose;
+const mongoose =require('mongoose');
+const { Schema } = mongoose;
 
 const PrivateChatSchema = new Schema({
     id_Conversation: { type: String },
     Content: { type: String },
-    time: { type: Date , default: Date.now},
-    isImage: { type: String , default: false},
+    time: { type: Date , default: Date.now },
+    isImage: { type: String , default: false },
     isSender: { type: String }
 },
     {
@@ -13,4 +13,4 @@ const PrivateChatSchema = new Schema({
         versionKey: false
     }
 );
-module.exports = mongoose.model('Private_Chat',PrivateChatSchema)
+module.exports = mongoose.model('Private_Chat',PrivateChatSchema);
