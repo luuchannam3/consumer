@@ -6,7 +6,7 @@ import * as ConversationController from './controllers/conversation';
 
 const kafka = new Kafka({
   clientId: 'consumer',
-  brokers: ['10.0.0.116:9092'],
+  brokers: [keys.KAFKA_HOST],
 });
 
 const consumer = kafka.consumer({ groupId: keys.KAFKA_GROUP });
@@ -20,18 +20,34 @@ const StartConsumer = async () => {
 
   await consumer.run({
     autoCommit: true,
-    eachMessage: async ({ topic, message }) => {
-      const { value, key } = message;
+    eachBatch: async ({ batch }) => {
+      const typeMessages = [];
+      const typeConversation = [];
+      const kafkaMessages = batch.messages.map((message) => {
+        const kafkaMessage = {
+          key: message.key.toString(),
+          value: JSON.parse(message.value.toString()),
+        };
 
-      logger.info(`key: ${key.toString()}, value: ${value.toString()}`);
+        return kafkaMessage;
+      });
 
-      if (topic === keys.KAFKA_TOPIC_MESSAGE) {
-        await MessageController.SaveMessage(value.toString());
+      for (let i = 0; i < kafkaMessages.length; i++) {
+        logger.info(`key: ${kafkaMessages[i].key}, value: ${kafkaMessages[i].value}`);
+
+        if (kafkaMessages[i].key === '') {
+          typeMessages.push(kafkaMessages[i]);
+        } else {
+          typeConversation.push(kafkaMessages[i]);
+        }
       }
 
-      if (topic === keys.KAFKA_TOPIC_CONVERSATION) {
-        await ConversationController.saveConversation(key.toString(), value.toString());
-      }
+      const promises = [
+        MessageController.SaveMessage(typeMessages),
+        ConversationController.saveConversation(typeConversation),
+      ];
+
+      await Promise.all(promises);
     },
   });
 };

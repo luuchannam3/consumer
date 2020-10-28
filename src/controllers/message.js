@@ -1,13 +1,15 @@
 import { Message } from 'models-common';
 
 export const SaveMessage = async (data) => {
-  const parseData = JSON.parse(data);
-
-  await Message.bulkWrite([
-    {
+  const parseData = data.map((mess) => {
+    const res = {
       insertOne: {
-        document: parseData,
+        document: mess.value,
       },
-    },
-  ]);
+    };
+
+    return res;
+  });
+
+  await Message.bulkWrite(parseData);
 };
