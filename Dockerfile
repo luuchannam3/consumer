@@ -19,7 +19,7 @@ RUN apk add --no-cache --virtual .gyp \
     && apk del .gyp
 
 COPY . .
-
-RUN yarn
+RUN yarn install
+RUN yarn run dev
 
 CMD ["yarn", "start"]

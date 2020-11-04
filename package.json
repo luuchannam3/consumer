@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^3.0.0",
+    "babel-cli": "^6.26.0",
     "kafkajs": "^1.14.0",
     "models-common": "git+ssh://git@lab.zinza.com.vn:2468/Medical/chat/models-common.git",
     "mongoose": "^5.10.6",
