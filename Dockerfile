@@ -19,6 +19,7 @@ RUN apk add --no-cache --virtual .gyp \
     && apk del .gyp
 
 COPY . .
+RUN rm -rf package-lock.json
 RUN yarn install
 RUN yarn run dev
 
