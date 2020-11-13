@@ -1,0 +1,9 @@
+{ message: 'MongoDB connected to mongodb://mongodb:27017/Medical',
+  level: 'info',
+  timestamp: '2020-11-04T02:46:42.164Z' }
+{ message: 'MongoDB connected to mongodb://mongodb:27017/Medical',
+  level: 'info',
+  timestamp: '2020-11-04T03:01:15.449Z' }
+{ message: 'MongoDB connected to mongodb://mongodb:27017/Medical',
+  level: 'info',
+  timestamp: '2020-11-04T04:01:53.846Z' }
